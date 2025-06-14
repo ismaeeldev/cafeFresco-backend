@@ -74,6 +74,10 @@ app.use('/distributer', distributer);
 
 connectDB();
 
+app.get('/', (req, res) => {
+    res.send('Server is running');
+});
+
 // Start the server on port 8080 (adjust the port as needed)
 app.listen(PORT, () => {
     console.log(`Server running on http://localhost:${PORT}`);
