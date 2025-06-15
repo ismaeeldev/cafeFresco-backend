@@ -62,11 +62,12 @@ router.post('/register', vpnDetect, async (req, res) => {
         const token = jwt.sign({ email: newUser.email, userId: newUser._id }, process.env.SECRET_KEY, { expiresIn: '15d' });
 
         res.cookie('userToken', token, {
-            // httpOnly: true,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'Lax',
-            maxAge: 15 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 15 * 24 * 60 * 60 * 1000
         });
+
 
         return res.status(201).json({
             message: 'User registered successfully!',
@@ -111,11 +112,12 @@ router.post('/login', loginLimiter, vpnDetect, async (req, res) => {
 
         // Set the token in a cookie
         res.cookie('userToken', token, {
-            // httpOnly: true,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'Lax',
-            maxAge: 15 * 24 * 60 * 60 * 1000,
+            httpOnly: true,
+            secure: true,
+            sameSite: 'None',
+            maxAge: 15 * 24 * 60 * 60 * 1000
         });
+
 
 
         // Send token in response for convenience
