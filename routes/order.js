@@ -111,7 +111,7 @@ router.post('/update-status', isAdmin, authorizeRoles("admin", "manager"), async
 });
 
 
-router.get('/fetch', isAdmin, authorizeRoles("admin", "editor", "manager"), async (req, res) => {
+router.get('/fetch', isAdmin, authorizeRoles("admin", "manager"), async (req, res) => {
     try {
         const { status, paymentStatus, year, month, page = 1, limit = 10, search } = req.query;
         const query = {};

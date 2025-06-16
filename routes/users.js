@@ -63,10 +63,11 @@ router.post('/register', vpnDetect, async (req, res) => {
 
         res.cookie('userToken', token, {
             httpOnly: false,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production', // only true in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 15 * 24 * 60 * 60 * 1000,
         });
+
 
 
         return res.status(201).json({
@@ -113,10 +114,11 @@ router.post('/login', loginLimiter, vpnDetect, async (req, res) => {
 
         res.cookie('userToken', token, {
             httpOnly: false,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'None',
+            secure: process.env.NODE_ENV === 'production', // only true in production
+            sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax',
             maxAge: 15 * 24 * 60 * 60 * 1000,
         });
+
 
 
         // Send token in response for convenience
