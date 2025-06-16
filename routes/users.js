@@ -121,7 +121,7 @@ router.post('/login', loginLimiter, vpnDetect, async (req, res) => {
 
 
         // Send token in response for convenience
-        res.status(200).json({ message: "Login successful", userToken });
+        res.status(200).json({ message: "Login successful", userToken: token });
 
     } catch (err) {
         console.error(err);
