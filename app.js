@@ -28,19 +28,25 @@ const cors = require('cors');
 
 EventEmitter.defaultMaxListeners = 20;
 
+const allowedOrigins = [
+    'http://localhost:5173',
+    'http://localhost:3001',
+    'https://cafe-fresco-dashboard.vercel.app',
+    'https://cafe-fresco-main.vercel.app'
+];
+
 app.use(cors({
     origin: function (origin, callback) {
-        // Allow specific localhost ports and all origins (for development)
-        const allowedOrigins = ['http://localhost:5173', 'http://localhost:3001', 'https://cafe-fresco-dashboard.vercel.app/', 'https://cafe-fresco-main.vercel.app/'];
         if (!origin || allowedOrigins.includes(origin)) {
             callback(null, true);
         } else {
-            callback(null, true);
+            callback(new Error('CORS Not Allowed'));
         }
     },
+    credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
-    credentials: true
 }));
+
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
