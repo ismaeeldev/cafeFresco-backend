@@ -36,13 +36,16 @@ const allowedOrigins = [
 ];
 
 app.use(cors({
-    origin: function (origin, callback) {
-        if (!origin || allowedOrigins.includes(origin)) {
-            callback(null, true);
-        } else {
-            callback(new Error('CORS Not Allowed'));
-        }
-    },
+origin: function (origin, callback) {
+    console.log('Incoming origin:', origin);
+    if (!origin || allowedOrigins.includes(origin)) {
+        callback(null, true);
+    } else {
+        console.log('Blocked origin:', origin);
+        callback(new Error('CORS Not Allowed'));
+    }
+},
+
     credentials: true,
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
 }));
