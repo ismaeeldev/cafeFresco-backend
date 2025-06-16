@@ -61,17 +61,16 @@ router.post('/register', vpnDetect, async (req, res) => {
         // Generate JWT token
         const token = jwt.sign({ email: newUser.email, userId: newUser._id }, process.env.SECRET_KEY, { expiresIn: '15d' });
 
-        res.cookie('userToken', token, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'None',
-            maxAge: 15 * 24 * 60 * 60 * 1000,
-        });
-
-
+        // res.cookie('userToken', token, {
+        //     httpOnly: false,
+        //     secure: process.env.NODE_ENV === 'production' ? true : false,
+        //     sameSite: 'None',
+        //     maxAge: 15 * 24 * 60 * 60 * 1000,
+        // });
 
 
         return res.status(201).json({
+            userToken: token,
             message: 'User registered successfully!',
             user: { name: newUser.name, email: newUser.email },
         });
@@ -113,16 +112,16 @@ router.post('/login', loginLimiter, vpnDetect, async (req, res) => {
         );
 
         // Set the token in a cookie
-        res.cookie('userToken', token, {
-            httpOnly: false,
-            secure: process.env.NODE_ENV === 'production' ? true : false,
-            sameSite: 'None',
-            maxAge: 15 * 24 * 60 * 60 * 1000,
-        });
+        // res.cookie('userToken', token, {
+        //     httpOnly: false,
+        //     secure: process.env.NODE_ENV === 'production' ? true : false,
+        //     sameSite: 'None',
+        //     maxAge: 15 * 24 * 60 * 60 * 1000,
+        // });
 
 
         // Send token in response for convenience
-        res.status(200).json({ message: "Login successful", token });
+        res.status(200).json({ message: "Login successful", userToken });
 
     } catch (err) {
         console.error(err);
