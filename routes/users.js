@@ -61,12 +61,12 @@ router.post('/register', vpnDetect, async (req, res) => {
         // Generate JWT token
         const token = jwt.sign({ email: newUser.email, userId: newUser._id }, process.env.SECRET_KEY, { expiresIn: '15d' });
 
-        // res.cookie('userToken', token, {
-        //     httpOnly: false,
-        //     secure: process.env.NODE_ENV === 'production' ? true : false,
-        //     sameSite: 'None',
-        //     maxAge: 15 * 24 * 60 * 60 * 1000,
-        // });
+        res.cookie('userToken', token, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            sameSite: 'None',
+            maxAge: 15 * 24 * 60 * 60 * 1000,
+        });
 
 
         return res.status(201).json({
@@ -111,13 +111,12 @@ router.post('/login', loginLimiter, vpnDetect, async (req, res) => {
             { email: checkUser.email, userId: checkUser._id }, process.env.SECRET_KEY, { expiresIn: '15d' }
         );
 
-        // Set the token in a cookie
-        // res.cookie('userToken', token, {
-        //     httpOnly: false,
-        //     secure: process.env.NODE_ENV === 'production' ? true : false,
-        //     sameSite: 'None',
-        //     maxAge: 15 * 24 * 60 * 60 * 1000,
-        // });
+        res.cookie('userToken', token, {
+            httpOnly: false,
+            secure: process.env.NODE_ENV === 'production' ? true : false,
+            sameSite: 'None',
+            maxAge: 15 * 24 * 60 * 60 * 1000,
+        });
 
 
         // Send token in response for convenience
